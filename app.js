@@ -47,7 +47,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         // 2. Actualizar UI
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
         // 3. Revisar si el jugador ganó el juego
-        if (scores[activePlayer] >= 10) {
+        if (scores[activePlayer] >= 100) {
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!!!'; // 1. anuncio el ganador
             document.querySelector('.dice').style.display = 'none'; // 2. escondo la imagen del dado
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner'); // 3. agrego la clase winner
@@ -69,7 +69,7 @@ function init() {
     roundScore = 0;
     activePlayer = 0; // 0 es el primer jugador, 1 es el segundo jugador
     gamePlaying = true;
-    
+
     // Selecciono la imagen del dado para que no se vea al comenzar el juego
     document.querySelector('.dice').style.display = 'none'; 
 
