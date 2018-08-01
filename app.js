@@ -39,29 +39,50 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     if (dice !== 1) { // agregar el score
         roundScore += dice; // roundScore suma el valor del dado a su total
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
-        
     } else {
-        
-        // Si el jugador activo es 0, entonces cambiarlo a 1, sino cambiarlo a 0
-        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-        
-        // el puntaje se resetea a 0
-        roundScore = 0; 
-        document.getElementById('current-0').textContent = '0';
-        document.getElementById('current-1').textContent = '0';
-        
-        // elimino la clase ACTIVE del jugador que está en turno y se la asigno al otro jugador mediante TOGGLE
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');
-        
-        // esconder la imagen del dado cuando el jugador saca 1
-        document.querySelector('.dice').style.display = 'none';
+        // Llamo a la funcion para cambiar de jugador
+        nextPlayer();
     }
-    
 });
 
 
+// Boton de HOLD
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    
+    // 1. Agregar el score "Current" al score Global
+    scores[activePlayer] += roundScore // Sumo el valor actual del puntaje al array que contiene el puntaje GLOBAL 
+    // 2. Actualizar UI
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    // 3. Revisar si el jugador ganó el juego
+    if (scores[activePlayer] >= 100) {
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner!!!'; // 1. anuncio el ganador
+        document.querySelector('.dice').style.display = 'none'; // 2. escondo la imagen del dado
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner'); // 3. agrego la clase winner
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active'); // 4. quito la clase active
+    } else {
+        // 4. Turno del jugador siguiente
+        nextPlayer();
+    }    
+});
 
+
+// Funcion para cambiar de jugador
+function nextPlayer() {
+    // Si el jugador activo es 0, entonces cambiarlo a 1, sino cambiarlo a 0
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        
+    // el puntaje del turno se resetea a 0
+    roundScore = 0; 
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    
+    // elimino la clase ACTIVE del jugador que está en turno y se la asigno al otro jugador mediante TOGGLE
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+    
+    // esconder la imagen del dado cuando el jugador saca 1
+    document.querySelector('.dice').style.display = 'none';
+}
 
 
 
